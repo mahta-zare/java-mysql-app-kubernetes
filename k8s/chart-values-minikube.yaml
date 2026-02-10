@@ -7,7 +7,7 @@ auth:
 
 image:
   registry: docker.io
-  repository: bitnmaiclegacy/mysql
+  repository: bitnamilegacy/mysql
   tag: 9.4.0-debian-12-r1
 
 # 1 primary and 2 secondary replicas
@@ -16,3 +16,4 @@ secondary:
   persistence:
     storageClass: standard
   
+
