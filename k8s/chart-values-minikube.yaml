@@ -1,0 +1,18 @@
+architecture: replication
+auth:
+  rootPassword: root-pass # Password for the root user. Ignored if existing secret is provided.
+  database: my-app-db # Name for a custom database to create
+  username: my-user # Name for a custom user to create
+  password: my-pass # Password for the new user. Ignored if existing secret is provided
+
+image:
+  registry: docker.io
+  repository: bitnmaiclegacy/mysql
+  tag: 9.4.0-debian-12-r1
+
+# 1 primary and 2 secondary replicas
+secondary:
+  replicaCount: 2
+  persistence:
+    storageClass: standard
+  
