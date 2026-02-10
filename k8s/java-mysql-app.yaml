@@ -18,7 +18,7 @@ spec:
       - name: my-registry-key
       containers:
       - name: javamysqlapp
-        image: mahtazare/test:java-mysql-project-1.2-SNAPSHOT
+        image: mahtazare/test:bootcamp-java-mysql-project-1.2-SNAPSHOT
         ports:
         - containerPort: 8080
         env:
