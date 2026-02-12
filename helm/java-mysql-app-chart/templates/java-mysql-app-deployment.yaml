@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-deployment
+  labels:
+    app: {{ .Values.appName }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.appName }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.appName }}
+    spec:
+      imagePullSecrets:
+      - name: {{ .Values.registryKey }}
+      containers:
+      - name: {{ .Values.appContainerName }}
+        image: {{ .Values.appImage }}:{{ .Values.imageVersion }}
+        ports:
+        - containerPort: {{ .Values.containerPort }}
+        env:
+        - name: DB_NAME
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.secretName }}
+              key: db_name
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.db.secretName }}
+              key: {{ .Values.db.secretUser }}
+        - name: DB_PWD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.db.secretName }}
+              key: {{ .Values.db.secretPass }}
+        - name: DB_SERVER
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Values.configName }}
+              key: {{ .Values.db.serverName }}
