@@ -1,19 +1,20 @@
-We have a java application that uses MySQL as its database. To make this application more reliable and highly available, we use Kubernetes to orchestrate the containers of this application. 
+We have a java application that uses MySQL as its database. To make this application more reliable and highly available, we use Kubernetes to orchestrate the containers of this application. We also replicate both the database and the app, so if one server goes down, the application is still reachable.
 
-Here are the steps to configure and deploy this application using k8s. The later steps cover the creating a Helm chart for this app.
-We include deployment of this application in both Minikube and LKE.
+Here are the steps to configure and deploy this application using k8s. The last step covers the creation of a Helm chart for this app.
+
+This application is deployed on Minikube
 
 step 1
 
 ```
 helm install -f chart-values-minikube.yaml my-release oci://registry-1.docker.io/bitnamicharts/mysql
 
-kubectl get pods
+kubectl get all
 ```
 
 step 2
 
-After building the jar file of my application using gradlew and building the docker image, I login to docker and push it to my private repository:
+After building the jar file of the java application using gradlew and building the docker image, I login to docker and push it to my private repository:
 
 ```
 docker login
@@ -39,7 +40,7 @@ kubectl apply -f java-mysql-app.yaml
 kubectl get pods -l app=java-mysql-app
 ```
 
-To access the application, create a post-forwarding and access the running application on localhost:8080
+To access the application, create a port-forwarding and access the running application on localhost:8080
 ```
 kubectl post-forward service/java-mysql-app-service 8080:8080
 ```
