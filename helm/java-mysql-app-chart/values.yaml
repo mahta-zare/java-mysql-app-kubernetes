@@ -1,2 +1,31 @@
 configName: db-config
-configData:  my-release-mysql-primary-0
+configData: my-release-mysql-primary-0
+
+secretName: db-secret
+secretData:
+  db_root_pass: root-pass
+  db_name: my-app-db
+  db_user: my-user
+  db_pass: my-pass
+
+appName: java-mysql-app
+replicaCount: 3
+registryKey: my-registry-key
+appContainerName: javamysqlapp
+appImage: mahtazare/test
+imageVersion: bootcamp-java-mysql-project-1.2-SNAPSHOT
+containerPort: 8080
+
+db:
+  secretName: my-secret
+  secretUser: db_user
+  secretPass: db_pass
+  serverName: db_server
+
+servicePort: 8080
+
+ingress:
+  hostName: java-mysql-app.com
+  pathType: Prefix
+  path: /
+
